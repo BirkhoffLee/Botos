@@ -4,13 +4,13 @@ botOS (IRC 機器人作業系統)
     第一次發佈 (2014/10/25 0:15)
     版本 2.1.0 組建 20141025  
 
-==系統需求
+系統需求
 ------
     php 5.5.12 測試成功
     不需要 MySQL
     請開啟 cURL 插件  
 
-==使用條約
+使用條約
 ------
     botOS 開放給所有人使用，你可以
     修改這個程式中的任何內容，但是
@@ -31,13 +31,13 @@ botOS (IRC bot OS)
     First release (2014/10/25 0:15)
     Version 2.1.0 build 20141025  
 
-==System requirement
+System requirement
 ------
     Tested on php 5.5.12
     No need MySQL
     cURL extension needed  
 
-==License
+License
 ------
     This script open to everybody,
     you can change everything in 
