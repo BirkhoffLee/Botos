@@ -23,7 +23,8 @@ botOS (IRC 機器人作業系統)
 ### 默認機器人名稱: IRCbot
     (在 config.php 內更改)  
 
-### 幫助指令: ~help
+### 幫助指令:
+    ~help
 ===============================================
 botOS (IRC bot OS)
 =====
@@ -50,4 +51,5 @@ License
 ### Default name: IRCbot
     (Change it in config.php)  
 
-### Help command: ~help
+### Help command:
+    ~help
