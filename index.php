@@ -24,7 +24,7 @@ if(DEBUG == true){
 header("Content-type: text/html; charset=utf-8");
 require 'config.php';
 
-class IRCBot {
+class botOS {
         var $socket;
         var $data;
         var $serverMessages;
@@ -40,7 +40,7 @@ class IRCBot {
 
         public function __construct(){
             global $config;
-        	$this->Submitlog("Birkhoff's Bot {$config['version']} Started.");
+        	$this->Submitlog("botOS by Birkhoff {$config['version']} Started.");
             $this->Submitlog("=============================================");
             $this->Submitlog("Server: {$config['server']}:{$config['port']}");
             $this->Submitlog("BOT's nick name: {$config['nick']}");
@@ -151,6 +151,14 @@ class IRCBot {
                     $query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
                     if($query && $query['status'] == 'success' && $name != $config['nick']) {
                         self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
+                    } elseif(strpos($this->data, 'gateway/')!==false){
+                    	$ip = explode('ip.', $this->data);
+                    	$ip = explode(' ', $ip[1]);
+                    	$ip = $ip[0];
+                    	$query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
+                    	if($query && $query['status'] == 'success' && $name != $config['nick']) {
+                        	self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
+                    	}
                     } elseif($name != $config['nick']){
                         self::say('好久不見，' . $name . '!');
                     }
@@ -187,13 +195,46 @@ class IRCBot {
             foreach ($replies as $key => $value) {
             	if($this->SayContent == $key){
             		if(stripos($value, '!!error#') !== false){
-            			self::say(str_ireplace('!!error#', '', $value), 'Error');
+						if(stripos($value, '&**#') !== false){
+	            			$vvalue = explode('&**#', str_ireplace('!!error#', '', $value));
+	            			foreach ($vvalue as $key => $wvalue) {
+	            				self::say($wvalue, 'Error');
+	            			}
+	            		} else {
+	            			self::say($value, 'Error');
+	            		}
             		} elseif(stripos($value, '!!notice#') !== false){
-            			self::say(str_ireplace('!!notice#', '', $value), 'Notice');
+						if(stripos($value, '&**#') !== false){
+	            			$vvalue = explode('&**#', str_ireplace('!!notice#', '', $value));
+	            			foreach ($vvalue as $key => $wvalue) {
+	            				self::say($wvalue, 'Notice');
+	            			}
+	            		} else {
+	            			self::say($value, 'Notice');
+	            		}
             		} elseif(stripos($value, '!!notify#') !== false){
-            			self::say(str_ireplace('!!notify#', '', $value), 'Notice');
+						if(stripos($value, '&**#') !== false){
+	            			$vvalue = explode('&**#', str_ireplace('!!notify#', '', $value));
+	            			foreach ($vvalue as $key => $wvalue) {
+	            				self::say($wvalue, 'Notice');
+	            			}
+	            		} else {
+	            			self::say($value, 'Notice');
+	            		}
             		} elseif(stripos($value, '!!default#') !== false){
-            			self::say(str_ireplace('!!default#', '', $value), 'Default');
+						if(stripos($value, '&**#') !== false){
+	            			$vvalue = explode('&**#', str_ireplace('!!default#', '', $value));
+	            			foreach ($vvalue as $key => $wvalue) {
+	            				self::say($wvalue, 'Default');
+	            			}
+	            		} else {
+	            			self::say($value, 'Default');
+	            		}
+	            	} elseif(stripos($value, '&**#') !== false){
+	            			$vvalue = explode('&**#', $value);
+	            			foreach ($vvalue as $key => $wvalue) {
+	            				self::say($wvalue);
+	            			}
             		} else {
             			self::say($value);
             		}
@@ -267,4 +308,4 @@ class IRCBot {
             $this->SayContent = addslashes(htmlspecialchars(strip_tags(str_replace(' ' . $this->SayTarget . ' :', '', $SayContentTemp[1]))));
         }
 }
-$bot = new IRCBot($config);
+$bot = new botOS();
