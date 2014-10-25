@@ -119,7 +119,7 @@ class botOS {
                             include($cmdFileName);
                         }
                     }
-                    if($this->shutup == false){
+                    if($this->shutup == false or $cmd == 'shutup'){
                         $cmdFileName = $cmdDir . 'user' . DIRECTORY_SEPARATOR . $cmd . '.php';
                         $this->arguments = $arguments;
                         if(file_exists($cmdFileName)){
