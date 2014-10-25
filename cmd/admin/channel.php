@@ -8,6 +8,8 @@ if(isset($arguments[1])){
     fclose($file);
     if(substr($arguments[1], 0, 1) != '#'){
         $newChannel = '#' . $arguments[1];
+    } else {
+        $newChannel = $arguments[1];
     }
 	$content = str_replace($config['channel'], $newChannel, $content);
     $fileName = "{$root}config.php";
