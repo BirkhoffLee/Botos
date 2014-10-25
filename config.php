@@ -10,5 +10,5 @@ $config = array(
         'nick'    => 'botOS', 
         'pass'    => '',
         'admin'   => 'admin',
-        'version' => '2.1.8 build 20141025'
+        'version' => '2.1.9 build 20141026'
 );
