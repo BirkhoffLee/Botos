@@ -1,8 +1,7 @@
 botOS (IRC 機器人作業系統)
 =====
-    作者 Birkhoff (http://b.irkhoff.com)
-    第一次發佈 (2014/10/25 0:15)
-    版本 2.1.0 組建 20141025  
+    作者 Birkhoff
+    部落格 http://b.irkhoff.com  
 
 系統需求
 ------
@@ -29,9 +28,8 @@ botOS (IRC 機器人作業系統)
 ===============================================
 botOS (IRC bot OS)
 =====
-    by Birkhoff (http://b.irkhoff.com)
-    First release (2014/10/25 0:15)
-    Version 2.1.0 build 20141025  
+    by Birkhoff
+    Blog: http://b.irkhoff.com  
 
 System requirement
 ------
