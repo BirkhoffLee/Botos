@@ -145,16 +145,16 @@ class botOS {
                 } elseif(stripos($this->data, ' JOIN ' . $config['channel'])!==false){
                 	$nameTemp = explode('!', $this->data);
                 	$name = str_replace(':', '', $nameTemp[0]);
-                    $ip = explode('@', $this->data);
-                    $ip = explode(' ', $ip[1]);
-                    $ip = $ip[0];
+                    $ip = @explode('@', $this->data);
+                    $ip = @explode(' ', $ip[1]);
+                    $ip = @$ip[0];
                     $query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
                     if($query && $query['status'] == 'success' && $name != $config['nick'] && $query['country']!='' && $query['city'] != '') {
                         self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
                     } elseif(strpos($this->data, 'gateway/')!==false){
-                    	$ip = explode('ip.', $this->data);
-                    	$ip = explode(' ', $ip[1]);
-                    	$ip = $ip[0];
+                    	$ip = @explode('ip.', $this->data);
+                    	$ip = @explode(' ', $ip[1]);
+                    	$ip = @$ip[0];
                     	$query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
                     	if($query && $query['status'] == 'success' && $name != $config['nick'] && $query['country']!='' && $query['city'] != '') {
                         	self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
