@@ -3,9 +3,9 @@ $config = array(
         'server'  => 'chat.freenode.net', 
         'port'    => 6667, 
         'channel' => '#ysitd',
-        'name'    => 'Birkhoff_Bot', 
-        'nick'    => 'Birkhoff_Bot', 
+        'name'    => 'botOS', 
+        'nick'    => 'botOS',
         'pass'    => '',
-        'admin'   => 'Birkhoff_',
+        'admin'   => 'admin',
         'version' => '2.1.0 build 20141025'
 );
