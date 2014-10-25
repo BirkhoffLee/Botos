@@ -1,11 +1,11 @@
 <?php
 $config = array( 
         'server'  => 'chat.freenode.net', 
-        'port'    => 6667, 
+        'port'    => 6665, 
         'channel' => '#ysitd',
         'name'    => 'botOS', 
-        'nick'    => 'botOS',
+        'nick'    => 'botOS', 
         'pass'    => '',
         'admin'   => 'admin',
-        'version' => '2.1.0 build 20141025'
+        'version' => '2.1.8 build 20141025'
 );

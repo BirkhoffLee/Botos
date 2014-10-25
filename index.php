@@ -1,8 +1,7 @@
 <?php
 /*
- *  botOS by Birkhoff
- *  http://b.irkhoff.com
- *  First release (2014/10/25 0:15)
+ *  botOS by Birkhoff (http://b.irkhoff.com)
+ *  https://github.com/BirkhoffLee/botOS
  *
  *  ==License
  *  This script open to everybody,
@@ -13,7 +12,8 @@
  *
 */
 $startTime = microtime(true);
-define('DEBUG', true);
+$root = dirname(__FILE__) . DIRECTORY_SEPARATOR;
+define('DEBUG', false);
 set_time_limit(0);
 ini_set('display_errors', 'on');
 if(DEBUG == true){
@@ -40,12 +40,12 @@ class botOS {
 
         public function __construct(){
             global $config;
-        	$this->Submitlog("botOS by Birkhoff {$config['version']} Started.");
+        	$this->Submitlog("botOS by Birkhoff Version {$config['version']} Started.");
             $this->Submitlog("=============================================");
             $this->Submitlog("Server: {$config['server']}:{$config['port']}");
-            $this->Submitlog("BOT's nick name: {$config['nick']}");
+            $this->Submitlog("Bot name: {$config['nick']}");
             $this->Submitlog("Channel: {$config['channel']}");
-            $this->Submitlog("The admin: {$config['admin']}");
+            $this->Submitlog("Admin: {$config['admin']}");
             $this->Submitlog("=============================================");
             echo '<script type="text/javascript">function pageScroll(){window.scrollBy(0,3000);scrolldelay = setTimeout(\'pageScroll()\',100);}pageScroll();</script>';
             $this->socket = fsockopen($config['server'], $config['port']);
@@ -149,14 +149,14 @@ class botOS {
                     $ip = explode(' ', $ip[1]);
                     $ip = $ip[0];
                     $query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
-                    if($query && $query['status'] == 'success' && $name != $config['nick']) {
+                    if($query && $query['status'] == 'success' && $name != $config['nick'] && $query['country']!='' && $query['city'] != '') {
                         self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
                     } elseif(strpos($this->data, 'gateway/')!==false){
                     	$ip = explode('ip.', $this->data);
                     	$ip = explode(' ', $ip[1]);
                     	$ip = $ip[0];
                     	$query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
-                    	if($query && $query['status'] == 'success' && $name != $config['nick']) {
+                    	if($query && $query['status'] == 'success' && $name != $config['nick'] && $query['country']!='' && $query['city'] != '') {
                         	self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
                     	}
                     } elseif($name != $config['nick']){
@@ -191,7 +191,10 @@ class botOS {
 
         private function _reply(){
 			global $config;
-            $replies = json_decode(file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'replies.json'), true);
+			$fn = fopen(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'replies.json', 'r');
+			$cont = fread($fn, filesize(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'replies.json'));
+			fclose($fn);
+            $replies = json_decode($cont, true);
             foreach ($replies as $key => $value) {
             	if($this->SayContent == $key){
             		if(stripos($value, '!!error#') !== false){

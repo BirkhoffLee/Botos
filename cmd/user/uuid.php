@@ -1,2 +1,2 @@
 <?php
-$this->say($this->SayUID, 'Information', $this->SayName);
+$this->say($this->SayName . ' 的 UUID: ' . $this->SayUID, 'Information');
