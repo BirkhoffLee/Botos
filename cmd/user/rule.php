@@ -17,7 +17,7 @@ if(@$arguments[1] == 'add' and isset($arguments[2]) and isset($arguments[3])){
         @$response .= $value . ' '; 
     }
     $response = trim($response);
-    if(strpos(substr($response, 0, 1)) == '~'){
+    if(substr($response, 0, 1) == '~'){
         $this->say('[回話規則設定] "' . $say . '": 此規則與指令衝突！', 'Error');
     }
     $replies = json_decode(file_get_contents($repliesJSON), true);
