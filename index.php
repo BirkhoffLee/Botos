@@ -9,11 +9,10 @@
  *  this script, BUT DO NOT REMOVE 
  *  THE AUTHOR'S NAME AND URL!
  *  ==End License
- *
 */
 $startTime = microtime(true);
 $root = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-define('DEBUG', false);
+define('DEBUG', true);
 set_time_limit(0);
 ini_set('display_errors', 'on');
 if(DEBUG == true){
@@ -43,7 +42,7 @@ class botOS {
         	$this->Submitlog("botOS by Birkhoff Version {$config['version']} Started.");
             $this->Submitlog("=============================================");
             $this->Submitlog("Server: {$config['server']}:{$config['port']}");
-            $this->Submitlog("Bot name: {$config['nick']}");
+            $this->Submitlog("Nickname: {$config['nick']}");
             $this->Submitlog("Channel: {$config['channel']}");
             $this->Submitlog("Admin: {$config['admin']}");
             $this->Submitlog("=============================================");
@@ -57,7 +56,6 @@ class botOS {
         }
 
         public function Submitlog($log){
-        	global $config;
             print('[' . date("Y-m-d H:i:s", mktime(date("H")+8, date("i"), date("s"), date("m"), date("d"), date("Y"))) . "] : $log <br />");
             ob_flush();
             flush();
@@ -112,19 +110,16 @@ class botOS {
                 } elseif(substr($this->SayContent, 0, 1) == '~'){
                     global $config;
                     self::Submitlog('<strong>命令被解析: ' . $cmd . '</strong>');
-                    if($this->SayName == $config['admin']){
-                        $cmdFileName = $cmdDir . 'admin' . DIRECTORY_SEPARATOR . $cmd . '.php';
+                    $adminCMDfn = $cmdDir . 'admin' . DIRECTORY_SEPARATOR . $cmd . '.php';
+                    $userCMDfn = $cmdDir . 'user' . DIRECTORY_SEPARATOR . $cmd . '.php';
+                    if(file_exists($adminCMDfn) and $this->SayName == $config['admin']){
                         $this->arguments = $arguments;
-                        if(file_exists($cmdFileName)){
-                            include($cmdFileName);
-                        }
-                    }
-                    if($this->shutup == false or $cmd == 'shutup'){
-                        $cmdFileName = $cmdDir . 'user' . DIRECTORY_SEPARATOR . $cmd . '.php';
+                        include($adminCMDfn);
+                    } elseif(file_exists($userCMDfn)){
                         $this->arguments = $arguments;
-                        if(file_exists($cmdFileName)){
-                            include($cmdFileName);
-                        }
+                        include($userCMDfn);
+                    } else {
+                        self::say($this->SayName . ': 找不到指令！請送出 ~help 以查看指令列表。', 'Error');
                     }
                 } else {
                     self::_reply();
@@ -150,14 +145,14 @@ class botOS {
                     $ip = @$ip[0];
                     $query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
                     if($query && $query['status'] == 'success' && $name != $config['nick'] && $query['country']!='' && $query['city'] != '') {
-                        self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
+                        self::say('好久不見，來自 ' . $query['country'] . ', ' . $query['city'] . ' 的 ' . $name . '!');
                     } elseif(strpos($this->data, 'gateway/')!==false){
                     	$ip = @explode('ip.', $this->data);
                     	$ip = @explode(' ', $ip[1]);
                     	$ip = @$ip[0];
                     	$query = @unserialize(file_get_contents('http://ip-api.com/php/' . $ip));
                     	if($query && $query['status'] == 'success' && $name != $config['nick'] && $query['country']!='' && $query['city'] != '') {
-                        	self::say('好久不見，來自 ' . $query['country'] . '-' . $query['city'] . ' 的 ' . $name . '!');
+                        	self::say('好久不見，來自 ' . $query['country'] . ', ' . $query['city'] . ' 的 ' . $name . '!');
                     	}
                     } elseif($name != $config['nick']){
                         self::say('好久不見，' . $name . '!');
@@ -204,7 +199,7 @@ class botOS {
 	            				self::say($wvalue, 'Error');
 	            			}
 	            		} else {
-	            			self::say($value, 'Error');
+	            			self::say(str_ireplace('!!error#', '', $value), 'Error');
 	            		}
             		} elseif(stripos($value, '!!notice#') !== false){
 						if(stripos($value, '&**#') !== false){
@@ -213,7 +208,7 @@ class botOS {
 	            				self::say($wvalue, 'Notice');
 	            			}
 	            		} else {
-	            			self::say($value, 'Notice');
+	            			self::say(str_ireplace('!!notice#', '', $value), 'Notice');
 	            		}
             		} elseif(stripos($value, '!!notify#') !== false){
 						if(stripos($value, '&**#') !== false){
@@ -222,7 +217,7 @@ class botOS {
 	            				self::say($wvalue, 'Notice');
 	            			}
 	            		} else {
-	            			self::say($value, 'Notice');
+	            			self::say(str_ireplace('!!notify#', '', $value), 'Notice');
 	            		}
             		} elseif(stripos($value, '!!default#') !== false){
 						if(stripos($value, '&**#') !== false){
@@ -231,7 +226,7 @@ class botOS {
 	            				self::say($wvalue, 'Default');
 	            			}
 	            		} else {
-	            			self::say($value, 'Default');
+	            			self::say(str_ireplace('!!default#', '', $value), 'Default');
 	            		}
 	            	} elseif(stripos($value, '&**#') !== false){
 	            			$vvalue = explode('&**#', $value);
@@ -253,7 +248,7 @@ class botOS {
 	        	} elseif($target == null){
 	        		$target = $config['channel'];
 	        	}
-	        	$head = "<strong>{$config['nick']}</strong>: ";
+	        	$head = "<strong>{$config['nick']} => {$target}</strong>: ";
 	        	switch ($type){
 	                case "Notify":
 	                case "Notice":
