@@ -5,6 +5,7 @@ botOS (IRC 機器人作業系統)
 
 系統需求
 ------
+    非常強烈建議在本機 (例如: wamp) 運行程式
     php 5.5.12 測試成功
     不需要 MySQL
     請開啟 cURL 插件  
@@ -33,6 +34,7 @@ botOS (IRC bot OS)
 
 System requirement
 ------
+    Very very recommended to run script in localhost (example: wamp)
     Tested on php 5.5.12
     No need MySQL
     cURL extension needed  
