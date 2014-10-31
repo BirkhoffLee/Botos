@@ -7,9 +7,10 @@ $config = array(
         'server'  => 'weber.freenode.net', 
         'port'    => 8000, 
         'channel' => '#ysitd',
-        'name'    => 'botOS', 
-        'nick'    => 'botOS', 
+        'name'    => 'Birkhoff_Bot', 
+        'nick'    => 'Birkhoff_Bot', 
         'pass'    => '',
-        'admin'   => 'admin',
-        'version' => '2.2.1 build 20141028'
+        'admin'   => 'Birkhoff_',
+        'version' => '2.2.2 build 20141102',
+        'checkUpdate' => true
 );
