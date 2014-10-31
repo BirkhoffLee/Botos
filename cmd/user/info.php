@@ -25,7 +25,7 @@ if($time >= 60){
 $value["seconds"] = floor($time);
 $uptime = "{$value['days']} 天 {$value['hours']} 小時 {$value['minutes']} 分鐘 {$value['seconds']} 秒";
 $this->say($this->SayName . ': 系統資訊已使用悄悄話方式傳送。');
-$this->say('botOS by Birkhoff >>>>>>>>>>>>>>>>>>>>>資訊', 'Information', $this->SayName);
+$this->say('Botos by Birkhoff >>>>>>>>>>>>>>>>>>>>>資訊', 'Information', $this->SayName);
 $this->say('===========================================', 'Information', $this->SayName);
 $this->say("連線至伺服器: {$config['server']}:{$config['port']}", 'Information', $this->SayName);
 $this->say("機器人的暱稱: {$config['nick']}", 'Information', $this->SayName);

@@ -1,7 +1,7 @@
 <?php
 /*
- *  botOS by Birkhoff (http://b.irkhoff.com)
- *  https://github.com/BirkhoffLee/botOS
+ *  Botos by Birkhoff (http://b.irkhoff.com)
+ *  https://github.com/BirkhoffLee/Botos
  *
  *  ==License
  *  This script open to everybody,
@@ -23,7 +23,7 @@ if(DEBUG == true){
 header("Content-type: text/html; charset=utf-8");
 require 'config.php';
 
-class botOS {
+class Botos {
         var $socket;
         var $data;
         var $serverMessages;
@@ -39,7 +39,7 @@ class botOS {
 
         public function __construct(){
             global $config;
-        	$this->Submitlog("botOS by Birkhoff Version {$config['version']} Started.");
+        	$this->Submitlog("Botos by Birkhoff Version {$config['version']} Started.");
             $this->Submitlog("=============================================");
             $this->Submitlog("Server: {$config['server']}:{$config['port']}");
             $this->Submitlog("Nickname: {$config['nick']}");
@@ -52,6 +52,11 @@ class botOS {
             $this->send_data('NICK ' . $config['nick']);
             $this->send_data('JOIN ' . $config['channel']);
             $this->extraDir = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cmd' . DIRECTORY_SEPARATOR . 'extra' . DIRECTORY_SEPARATOR;
+            
+            if($config['checkUpdate']){
+                require_once($this->extraDir . 'update.php');
+            }
+
             $this->main();
         }
 
@@ -102,12 +107,11 @@ class botOS {
             $cmd = @str_replace("\\", '', str_replace('/', '', str_replace('.', '', str_replace('~', '', trim($arguments[0])))));
             $cmdDir = @dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cmd' . DIRECTORY_SEPARATOR;
             if(@$cmd != 'index'){
-                if(filter_var($this->SayContent, FILTER_VALIDATE_URL)){
-                    if(strpos($this->SayContent, '://goo.gl/')!==false){
-                        include($this->extraDir . 'google_short_expand.php');
-                    }
-                    @include($this->extraDir . 'title_process.php');
-                } elseif(substr($this->SayContent, 0, 1) == '~'){
+                if(strpos($this->SayContent, '://goo.gl/')!==false){
+                    include($this->extraDir . 'google_short_expand.php');
+                }
+                @include($this->extraDir . 'title_process.php');
+                if(substr($this->SayContent, 0, 1) == '~'){
                     global $config;
                     self::Submitlog('<strong>命令被解析: ' . $cmd . '</strong>');
                     $adminCMDfn = $cmdDir . 'admin' . DIRECTORY_SEPARATOR . $cmd . '.php';
@@ -134,7 +138,7 @@ class botOS {
             	if(stripos($this->data, 'End of /NAMES list') !== false and $this->standby == false){
             		$this->standby = true;
                 	self::say('Bot 連線成功', 'Notice');
-                	self::say('[System] botOS ' . $config['version'] . ' is up.', 'Information', $config['admin']);
+                	self::say('[System] Botos ' . $config['version'] . ' is up.', 'Information', $config['admin']);
             	} elseif(substr($this->data, 0, 6) === 'PING :'){
                     $this->send_data(str_replace('PING :', 'PONG :', $this->data));
                 } elseif(stripos($this->data, ' JOIN ' . $config['channel'])!==false){
@@ -159,29 +163,6 @@ class botOS {
                     }
                 }
             }
-        }
-
-        private function _title_url_process(){
-            $url = $this->SayContent;
-            $urlParse = parse_url($url);
-            if(isset($urlParse['query'])){
-                $query = '?' . $urlParse['query'];
-            } else {
-                $query = '';
-            }
-            $url = $urlParse['scheme'] . '://' . $urlParse['host'] . $urlParse['path'] . $query;
-            ini_set("user_agent","Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Safari/537.36");
-            if($str = file_get_contents($this->SayContent)){
-                $titleTemp = explode('<title', $str);
-                $titleTemp = explode('>', $titleTemp[1]);
-                $titleTemp = explode('<', $titleTemp[1]);
-                $urlTemp = explode('\\', str_replace('https://', '', str_replace('http://', '', $this->SayContent)));
-                if(strpos($urlTemp[0], '/')!==false){
-                    $temp = explode('/', $urlTemp[0]);
-                    $host = $temp[0];
-                }
-                self::say("[ {$titleTemp[0]} ] - $host", 'Default');
-        	}
         }
 
         private function _reply(){
@@ -306,4 +287,4 @@ class botOS {
             $this->SayContent = addslashes(htmlspecialchars(strip_tags(str_replace(' ' . $this->SayTarget . ' :', '', $SayContentTemp[1]))));
         }
 }
-$bot = new botOS();
+$bot = new Botos();

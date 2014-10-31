@@ -1,3 +1,3 @@
 <?php
 global $config;
-$this->say('botOS by Birkhoff, 版本 ' . $config['version'] . '.');
+$this->say('Botos by Birkhoff, 版本 ' . $config['version'] . ', on http://botos.irkhoff.com');

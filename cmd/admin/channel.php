@@ -20,10 +20,10 @@ if(isset($arguments[1])){
         fwrite($file, $content);
         fclose($file);
 
-        $this->say('[System] botOS 將重新啟動以更換頻道至 ' . $newChannel . '。', 'Error', $config['channel']);
-        $this->say('[System] botOS is restarting by ' . $this->SayName . '\'s permission.', 'Error', $config['channel']);
-        $this->say('[System] botOS 將重新啟動以更換頻道至 ' . $newChannel . '。', 'Error', $config['admin']);
-        $this->say('[System] botOS is restarting.', 'Error', $config['admin']);
+        $this->say('[System] Botos 將重新啟動以更換頻道至 ' . $newChannel . '。', 'Error', $config['channel']);
+        $this->say('[System] Botos is restarting by ' . $this->SayName . '\'s permission.', 'Error', $config['channel']);
+        $this->say('[System] Botos 將重新啟動以更換頻道至 ' . $newChannel . '。', 'Error', $config['admin']);
+        $this->say('[System] Botos is restarting.', 'Error', $config['admin']);
         $this->send_data('QUIT', 'Restart');
         echo "<meta http-equiv=\"refresh\" content=\"0.1\">";
         exit;

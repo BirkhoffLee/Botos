@@ -23,4 +23,4 @@ if($time >= 60){
 } 
 $value["seconds"] = floor($time);
 $uptime = "{$value['days']} 天 {$value['hours']} 小時 {$value['minutes']} 分鐘 {$value['seconds']} 秒";
-$this->say('botOS 已運行 ' . $uptime . '。');
+$this->say('Botos 已運行 ' . $uptime . '。');
