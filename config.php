@@ -10,7 +10,7 @@ $config = array(
         'name'    => 'Botos', 
         'nick'    => 'Botos', 
         'pass'    => '',
-        'admin'   => 'Birkhoff_',
-        'version' => '2.2.2 build 20141102',
+        'admin'   => 'admin',
+        'version' => '2.2.1 build 20141101',
         'checkUpdate' => true
 );
