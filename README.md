@@ -1,4 +1,4 @@
-botOS (IRC 機器人作業系統)
+Botos (IRC 聊天機器人)
 =====
     作者 Birkhoff
     部落格 http://b.irkhoff.com  
@@ -25,33 +25,4 @@ botOS (IRC 機器人作業系統)
     (在 config.php 內更改)  
 
     幫助指令:
-    ~help
-===============================================
-botOS (IRC bot OS)
-=====
-    by Birkhoff
-    Blog: http://b.irkhoff.com  
-
-System requirement
-------
-    Very very recommended to run script in localhost (example: wamp)
-    Tested on php 5.5.12
-    No need MySQL
-    cURL extension needed  
-
-License
-------
-    This script open to everybody,
-    you can change everything in 
-    this script, BUT DO NOT REMOVE 
-    THE AUTHOR'S NAME AND URL!  
-
-### Readme
-    Default administrator: admin
-    (Change it in config.php)  
-    
-    Default name: botOS
-    (Change it in config.php)  
-
-    Help command:
     ~help
