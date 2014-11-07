@@ -6,11 +6,11 @@
 $config = array( 
         'server'  => 'weber.freenode.net', 
         'port'    => 8000, 
-        'channel' => '#ysitd',
+        'channel' => '#Botos',
         'name'    => 'Botos', 
         'nick'    => 'Botos', 
         'pass'    => '',
         'admin'   => 'admin',
-        'version' => '2.2.1 build 20141101',
+        'version' => '2.2.2 build 20141102',
         'checkUpdate' => true
 );
