@@ -26,7 +26,7 @@ if(substr($url, -1) == '#'){
     $url = substr($url, 0, -1);
 }
 if (filter_var($url, FILTER_VALIDATE_URL) !== FALSE) {
-	$fsock = fsockopen(str_ireplace('https://', '', str_ireplace('http://', '', $host)), 80, $errno, $errstr, 6);
+	$fsock = @fsockopen(str_ireplace('https://', '', str_ireplace('http://', '', $host)), 80, $errno, $errstr, 6);
     if($fsock){
 		$this->Submitlog('URL 分析中: ' . $url);
 		ini_set("user_agent","Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Safari/537.36");
