@@ -71,7 +71,7 @@ if($config['version'] != $latestVersion){
         $this->Submitlog('<strong>[UPDATE LOG] ===============================</strong>');
 
         $this->Submitlog('<strong>[UPDATE] Update complete. Botos will restart in 5 seconds. Enjoy!</strong>');
-        $this->send_data('QUIT', 'Shutdown');
+        $this->send_data('QUIT Update', false);
         echo "<meta http-equiv=\"refresh\" content=\"5\">";
         exit;
     } else {
