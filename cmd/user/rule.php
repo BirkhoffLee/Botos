@@ -83,23 +83,32 @@ if(@$arguments[1] == 'add' and isset($arguments[2]) and isset($arguments[3])){
     		}
     		$value = str_replace('!!error#', '', str_replace('!!default#', '', $value));
     		$value = str_replace('!!notice#', '', str_replace('!!notify#', '', $value));
-    		$value = str_replace('&**#', ' (換行) ', $value);
     		$this->say('[回話規則] "' . $key . '" 的回話內容: "' . $value . '"', 'Information', $this->SayName);
     	}
 		$this->say('[回話規則] =================規則清單結束===============', 'Information', $this->SayName);
     }
 } else {
-    $this->say($this->SayName . ': 參數錯誤！幫助訊息已使用悄悄話傳送。', 'Error');
-	$this->say('參數錯誤! 用法:', 'Error', $this->SayName);
+    if(isset($arguments[1]) and $arguments[1] != ''){
+        if($arguments[1] == 'help'){
+            $this->say($this->SayName . ': 幫助訊息已使用悄悄話傳送。', 'Error');
+        } else {
+            $this->say($this->SayName . ': 參數錯誤！幫助訊息已使用悄悄話傳送。', 'Error');
+        }
+    } else {
+        $this->say($this->SayName . ': 幫助訊息已使用悄悄話傳送。', 'Error');
+    }
+	$this->say('回話規則指令用法:', 'Error', $this->SayName);
     $this->say('~rule [command] (說話內容) (回話內容)', 'Error', $this->SayName);
-    $this->say('P.S: (說話內容) 參數中的空格請用 $SP 代替', 'Error', $this->SayName);
+    $this->say('P.S: 參數中的空格請用 $SP 代替', 'Error', $this->SayName);
     $this->say('P.S: (說話內容) 參數中的換行請用 &**# 代替', 'Error', $this->SayName);
     $this->say('P.S: (說話內容) 紅色字體請在句尾加上 !!error#', 'Error', $this->SayName);
     $this->say('P.S: (說話內容) 灰色字體請在句尾加上 !!notice#', 'Error', $this->SayName);
     $this->say('P.S: (說話內容) 黑色字體請在句尾加上 !!default#', 'Error', $this->SayName);
+    $this->say('P.S: (說話內容) 不分大小寫', 'Error', $this->SayName);
 	$this->say('=================================', 'Error', $this->SayName);
 	$this->say('指令列表:', 'Error', $this->SayName);
     sleep(10);
+    $this->say('查看本幫助內容 [悄悄話方式發送]: ~rule help', 'Error', $this->SayName);
 	$this->say('列出所有回話規則 [悄悄話方式發送]: ~rule list', 'Error', $this->SayName);
     $this->say('列出指定回話規則: ~rule look <說話內容>', 'Error', $this->SayName);
 	$this->say('新增回話規則: ~rule add <說話內容> <回話內容>', 'Error', $this->SayName);
