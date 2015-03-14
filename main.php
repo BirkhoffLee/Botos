@@ -63,37 +63,38 @@ class Botos {
         }
 
         public function main(){
+        	while(true){
         		global $config;
-                $this->data = str_replace("\r\n", '', trim(fgets($this->socket, 256)));
-
-                if(!isset($this->data) or $this->data == null or $this->data == ''){
-					self::main();
-				}
-
-                if(strpos($this->data, 'Nickname is already in use.') !== false){
-                	self::Submitlog("Received ServerMessage -> <strong><span style='color:#3b5998'>{$this->data}</span></strong>");
-                	self::Submitlog('<strong>登入失敗：上次登入 Session 尚未過期或暱稱被盜用。</strong>');
-                	exit;
-                }
-
-                $checkChating = explode(' ', $this->data);
-                if(@$checkChating[1] != 'PRIVMSG'){
-                    // 非聊天階段
-                    self::_serv_msg();
-                } else {
-                    // 聊天階段
-                    global $config;
-        			self::_parse();
-                    
-                    if(!isset($this->SayName) or !isset($this->SayTarget) or !isset($this->SayUID) or !isset($this->SayContent) or $this->SayName == '' or $this->SayTarget == '' or $this->SayUID == '' or $this->SayContent == ''){
-                    	// 資料錯誤
-                    	self::Submitlog("<span style='color:red'><strong>Error with parsing data information!</strong></span>");
-                    }
-
-                    self::Submitlog("<strong>[CHAT] {$this->SayName}</strong>: {$this->SayContent}");
-                    self::_process_chat();
-            	}
-                self::main();
+	                $this->data = str_replace("\r\n", '', trim(fgets($this->socket, 256)));
+	
+	                if(!isset($this->data) or $this->data == null or $this->data == ''){
+				continue;
+			}
+	
+	                if(strpos($this->data, 'Nickname is already in use.') !== false){
+	                	self::Submitlog("Received ServerMessage -> <strong><span style='color:#3b5998'>{$this->data}</span></strong>");
+	                	self::Submitlog('<strong>登入失敗：上次登入 Session 尚未過期或暱稱被盜用。</strong>');
+	                	break; // I am assuming that you have something that terminates the process somewhere else too.
+	                }
+	
+	                $checkChating = explode(' ', $this->data);
+	                if(@$checkChating[1] != 'PRIVMSG'){
+	                    // 非聊天階段
+	                    self::_serv_msg();
+	                } else {
+	                    // 聊天階段
+	                    global $config;
+	        			self::_parse();
+	                    
+	                    if(!isset($this->SayName) or !isset($this->SayTarget) or !isset($this->SayUID) or !isset($this->SayContent) or $this->SayName == '' or $this->SayTarget == '' or $this->SayUID == '' or $this->SayContent == ''){
+	                    	// 資料錯誤
+	                    	self::Submitlog("<span style='color:red'><strong>Error with parsing data information!</strong></span>");
+	                    }
+	
+	                    self::Submitlog("<strong>[CHAT] {$this->SayName}</strong>: {$this->SayContent}");
+	                    self::_process_chat();
+	            	}
+        	}
         }
 
         private function _process_chat(){
