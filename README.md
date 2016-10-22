@@ -1,7 +1,9 @@
+## THIS REPOSITORY IS NO LONGER BEING MAINTAINED
+
 Botos (IRC 聊天機器人)
 =====
     作者 Birkhoff
-    部落格 http://b.irkhoff.com  
+    部落格 https://blog.birkhoff.me
 
 系統需求
 ------
